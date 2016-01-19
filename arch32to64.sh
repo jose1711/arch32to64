@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # set -x
 # gives hints when migrating from a 32bit to a 64bit flavour of arch linux.
-# useful when you want to change arch (after memory upgrade?) but want
+# useful when you'd like to change arch (after memory upgrade?) but want
 # to keep as much packages (preferably all) as possible.
 # runs dependency checks for all packages, including those in aur. to provide
 # some level of protection a playpen sandbox is leveraged when inspecting
@@ -23,7 +23,7 @@
 # example session:
 #  review prepare_sandbox.sh and change sandboxdir if desirable
 #  run prepare_sandbox.sh
-#  if you changed sandboxdir also make a change in this file
+#  if you changed sandboxdir also reflect it in this file (sandboxdir var below)
 #  save and run giving no parameters
 #  pkgbuilds from aur will be processed (or more exactly interpreted by
 #   shell) in a sandbox provided by playpen. this is safer then simply
