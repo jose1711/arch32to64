@@ -61,6 +61,12 @@ which playpen || {
 	exit 1
 	}
 
+if [ ! -d "${sandboxdir}" ]
+then
+	echo "sandbox directory ${sandboxdir} does not exist"
+	exit 1
+fi
+
 pacmanddb=$(mktemp -d)
 pkgmissing=$(mktemp)
 archmissing=$(mktemp)
