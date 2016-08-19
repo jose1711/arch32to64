@@ -1,0 +1,29 @@
+Tips for migration from 32bit to 64bit Arch Linux
+-------------------------------------------------
+
+* do at least minimal housekeeping (fslint may prove itself useful for this)
+  * remove unnecessary packages
+  * fix/inspect broken symlinks
+  * delete core files
+* backup possibly important files
+  * locate files in root (/) filesystem not tracked by pacman and decide whether they need backup or can be deleted
+    (files_in_root_not_tracked_by_pacman.sh)
+  * repeat this for 32-bit binaries on *all* filesystems. this could help you find some forgotten proprietary sw
+    (32bit_binaries_not_tracked_by_pacman.sh)
+  * locate and backup files installed via pacman but modified (config files)
+    (list_files_installed_using_pacman_with_changed_hash.sh)
+  * make a snapshot of fs tree for future reference: ls -lR /
+  * backup /etc, /var/log/pacman
+* check if all your currently installed packages exist in 64bit version too
+  (prepare_sandbox.sh + arch32to64.sh)
+  * if not contact its maintainer and ask for a fix (or provide a patch yourself)
+* if you're maintaining pkgbuilds aur assure all of them have x86_64 listed in arch field
+  (show_arch_of_aur_pkgbuilds_of_maintainer.sh)
+* backup installed packages you cannot find in aur via bacman
+* do a test installation in VirtualBox/Vmware
+  * collect list of packages to install using arch32to64.sh
+  * install yaourt and install packages from the list
+  * restore files not tracked by pacman and tracked but modified and reboot
+* if you have a architecture-specific database (e. g. postgres or RRD), do a dump so it can be restored after arch change 
+* if possible make a separate partition for a new 64-bit root, follow the procedure tested in virtual environment
+* after some time spent with the reinstalled system consider deleting old 32-bit root and freeing up space
