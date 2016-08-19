@@ -17,6 +17,8 @@ all_files=$(mktemp)
 scriptdir=$(dirname $(readlink -f $0))
 echo "scriptdir is ${scriptdir}"
 . ${scriptdir}/common_funcs.sh
+# we really don't want to skip many filesystems
+export regex="/opt/desura|/proc|/sys|.*/\.ccache/.*"
 root_needed
 
 detect_steampath
@@ -25,6 +27,6 @@ pacman -Ql `pacman -Qq` | grep -v '/$' | cut -d' ' -f 2- >${pacman_files}
 sort -o ${pacman_files} ${pacman_files}
 
 echo "searching.. (the following dirs are skipped: ${regex}"
-find / -regextype posix-extended -regex "${regex}" -prune -o -type f -print0 | xargs -0 file '{}' | awk -F: '/32-bit/{print $1}' | sort >${all_files}
+find / -regextype posix-extended -regex "${regex}" -prune -o -type f -print0 2>/dev/null | xargs -0 file '{}' | awk -F: '/32-bit/{print $1}' | sort >${all_files}
 
 join -v 2 ${pacman_files} ${all_files}
